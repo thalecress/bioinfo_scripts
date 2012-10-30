@@ -25,9 +25,14 @@ summary (reads.merged)
 #get gene coordinates table .tsv
 gene_coor<- read.table ("gene_coordinates_table.tsv", sep="\t")
 head (gene_coor)
-gene_coor$number <- row.names (gene_coor)
-plot (gene_coor$V3, gene_coor$number)
-
+gene_coor$gene.order <- row.names (gene_coor)
+plot (gene_coor$V3, gene_coor$gene.order)
+colnames (gene_coor)[1]<- "ITAG"
+colnames (gene_coor)[2]<- "Chr"
+colnames (gene_coor)[3]<- "Start"
+colnames (gene_coor)[4]<- "Stop"
+head(gene_coor)
+write.csv(gene_coor, "gene.order.forDan.csv")
 #Reorder merged genes by the proper order based on gene_coor$number
 gene_ord<- gene_coor[,c(1,5)]
 reads.merged.ord <- merge(reads.merged, gene_ord, by=1,1)
